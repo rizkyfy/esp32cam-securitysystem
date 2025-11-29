@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>ESP32-CAM CCTV System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: #000;
+      margin: 0;
+      padding: 20px;
+      color: white;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background-color: #1a1a1a;
+      color: #00ff00;
+      padding: 15px;
+      text-align: center;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 24px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .video-container {
+      position: relative;
+      background-color: #000;
+      border: 2px solid #333;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    .stream-container {
+      width: 100%;
+      position: relative;
+    }
+
+    #stream {
+      width: 100%;
+      display: block;
+    }
+
+    .controls {
+      background-color: #1a1a1a;
+      padding: 15px;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    button {
+      background-color: #333;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #00ff00;
+      color: #000;
+    }
+
+    .status {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      background-color: rgba(0, 255, 0, 0.2);
+      border: 1px solid #00ff00;
+      color: #00ff00;
+      border-radius: 3px;
+    }
+
+    .recording-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: #ff0000;
+      border-radius: 50%;
+      margin-right: 5px;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      ESP32-CAM CCTV System
+    </div>
+
+    <div class="video-container">
+      <div class="video-overlay">
+        <div id="datetime"></div>
+        <div class="status">
+          <span class="recording-dot"></span>
+          LIVE
+        </div>
+      </div>
+      <div class="stream-container">
+        <img src="/stream" id="stream" alt="Loading stream...">
+      </div>
+    </div>
+
+    <div class="controls">
+      <button onclick="refreshStream()">Refresh Stream</button>
+      <button onclick="toggleFullscreen()">Fullscreen</button>
+    </div>
+  </div>
+
+  <script>
+    function updateDateTime() {
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('id-ID', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      });
+      const timeStr = now.toLocaleTimeString('id-ID', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      document.getElementById('datetime').textContent =
+        `CAM01 | ${dateStr} ${timeStr}`;
+    }
+
+    function refreshStream() {
+      const stream = document.getElementById('stream');
+      stream.src = '/stream?' + new Date().getTime();
+    }
+
+    function toggleFullscreen() {
+      const container = document.querySelector('.video-container');
+      if (!document.fullscreenElement) {
+        container.requestFullscreen().catch(err => {
+          alert(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Update date/time every second
+    setInterval(updateDateTime, 1000);
+    updateDateTime(); // Initial update
+
+    // Auto-refresh stream every 5 minutes
+    setInterval(refreshStream, 300000);
+
+    // Handle stream errors
+    document.getElementById('stream').onerror = function() {
+      console.log("Stream error, reconnecting...");
+      setTimeout(refreshStream, 5000);
+    };
+  </script>
+</body>
+
+</html>
