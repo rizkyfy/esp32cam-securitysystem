@@ -62,6 +62,10 @@ Library yang diperlukan (bisa diinstall via Library Manager)
 5. Buka browser dan akses http://IP_ADDRESS
 6. Nikmati live streaming CCTV Anda!
 
+📊 Diagram Sistem
+   
+   ![Block Diagram](images/block-diagram.png)
+
 📄 Lisensi
 Project ini menggunakan lisensi MIT - lihat file LICENSE untuk detail.
 
