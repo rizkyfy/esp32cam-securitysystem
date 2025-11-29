@@ -66,6 +66,21 @@ Library yang diperlukan (bisa diinstall via Library Manager)
    
    ![Block Diagram](images/block-diagram.png)
 
+📊 Sistem Kerja
+- GoogleDrive
+- ![GoogleDrive](images/google-drive.png)
+
+- Telegram
+- ![Telegram](images/telegram.png)
+
+- Topologi
+- ![Topologi](images/topologi.png)
+
+- Web Server
+- ![WebServer](images/web-server.png)
+
+===================================================================================
+
 📄 Lisensi
 Project ini menggunakan lisensi MIT - lihat file LICENSE untuk detail.
 
