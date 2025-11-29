@@ -4,7 +4,7 @@ Adalah Sebuah sistem keamanan berbasis IOT dengan memanfaatkan sistem kamera yan
 
 🌟 Fitur Utama
 - Live Streaming - Menampilkan live streaming video dari kamera ESP32-CAM pada halaman web.
-- Motion Detection - Menampilkan live streaming video dari kamera ESP32-CAM pada halaman web.
+- Motion Detection - Mampu mendeteksi gerakan melalui sensor PIR dan mengambil foto saat gerakan terdeteksi.
 - Auto Upload - Secara otomatis mengunggah foto hasil deteksi gerakan ke Google Drive.
 - Telegram Notification - Memberikan notifikasi melalui Telegram saat perangkat online.
 - Web Interface - Memungkinkan pengguna untuk me-refresh stream video dan mengaktifkan mode fullscreen melalui tombol pada halaman web.
